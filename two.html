@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>game one</title>
+        <link rel="stylesheet" href="index.css">
+        <style>
+            html {
+                background-color: #282828;
+            }
+        </style>
+        <script>
+            function checkHover(elementId) {
+                element = document.getElementById(elementId);
+                if (element.matches(":hover")) {
+                    return true;
+                } else {
+                    return false;
+                };
+            };
+            
+            function handleKeyPress() {
+                hback = checkHover("back");
+                if (hback) {
+                    window.location.href = "index.html"
+                }
+            };
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'o') {
+                    handleKeyPress()
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <p id="back" class="btn" style="position: absolute; top: 10px; left: 10px;">back</p>
+    </body>
+</html>

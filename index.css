@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap');
+
 body, html {
     margin: 0;
     padding: 0;
+    font-family: 'Comic Relief';
+    letter-spacing: 0.7px;
 }
 
 #intro {
@@ -36,10 +40,11 @@ body, html {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: dimgrey;
+    background-color: #282828;
     text-align: center;
     display: flex;
     align-items: center;
+    color: white;
 }
 
 .menu {
@@ -47,3 +52,27 @@ body, html {
     margin-right: auto;
 }
 
+.menu h1 {
+    font-size: 50px;
+}
+
+.btn {
+    background-color: white;
+    color: #282828;
+    padding: 20px;
+    border-radius: 10000000000px;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Comic Relief';
+    letter-spacing: 0.7px;
+    user-select: none;
+}
+
+.black {
+
+}
+
+.btn:hover {
+    cursor: default;
+}

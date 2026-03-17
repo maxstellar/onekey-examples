@@ -2,22 +2,43 @@
 <html>
     <head>
         <link rel="stylesheet" href="index.css">
+        <title>onekey examples</title>
         <script>
-            let state = 0
+            let state = 0;
             
+            function checkHover(elementId) {
+                element = document.getElementById(elementId);
+                if (element.matches(":hover")) {
+                    return true;
+                } else {
+                    return false;
+                };
+            };
+
             function handleKeyPress() {
+                hone = checkHover("one");
+                htwo = checkHover("two");
+                hthree = checkHover("three");
                 if (state == 0) {
-                    intro = document.getElementById("intro")
+                    intro = document.getElementById("intro");
                     if (intro) {
+                        state++
                         intro.classList.add('fade-out');
                         intro.addEventListener('transitionend', () => {
                             intro.remove();
-                        }, { once: true })
-                        state++
-                    }
+                        }, { once: true });
+                    };
                     return
-                }
-            }
+                } else if (state == 1) {
+                    if (hone) {
+                        window.location.href = "one.html"
+                    } else if (htwo) {
+                        window.location.href = "two.html"
+                    } else if (hthree) {
+                        window.location.href = "three.html"
+                    };
+                };
+            };
 
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'o') {
@@ -28,11 +49,18 @@
     </head>
     <body>
         <div id="intro">
-            <p>hi and welcome to my scuffed demo<br>this entire website is intended to be navigable with only one key<br>obviously not mobile friendly. turn back if you're on a phone<br><br>press o to continue</p>
+            <p>hi and welcome to my scuffed demo<br>this entire website is intended to be navigable with only one key (+ mouse movement)<br>obviously not mobile friendly. turn back if you're on a phone<br><br>press o to continue</p>
         </div>
         <div class="everything_else">
             <div class="menu">
-                <h1>HELLO HELLO HELLO HELLO</h1>
+                <h1>onekey examples</h1>
+                <p>hover over these buttons and press "o" to select them!</p>
+                <br>
+                <div style="display: flex; justify-content: center;" draggable="false">
+                    <p id="one" class="btn" draggable="false">one</p>
+                    <p id="two" class="btn" draggable="false">two</p>
+                    <p id="three" class="btn" draggable="false">three</p>
+                </div>
             </div>
         </div>
     </body>
