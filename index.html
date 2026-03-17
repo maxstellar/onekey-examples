@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="index.css">
+        <script>
+            let state = 0
+            
+            function handleKeyPress() {
+                if (state == 0) {
+                    intro = document.getElementById("intro")
+                    if (intro) {
+                        intro.classList.add('fade-out');
+                        intro.addEventListener('transitionend', () => {
+                            intro.remove();
+                        }, { once: true })
+                        state++
+                    }
+                    return
+                }
+            }
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'o') {
+                    handleKeyPress()
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div id="intro">
+            <p>hi and welcome to my scuffed demo<br>this entire website is intended to be navigable with only one key<br>obviously not mobile friendly. turn back if you're on a phone<br><br>press o to continue</p>
+        </div>
+        <div class="everything_else">
+            <div class="menu">
+                <h1>HELLO HELLO HELLO HELLO</h1>
+            </div>
+        </div>
+    </body>
+</html>

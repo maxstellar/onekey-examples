@@ -1,0 +1,49 @@
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+#intro {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 10;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+#intro.fade-out {
+    opacity: 0;
+}
+
+#intro p {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 24px;
+}
+
+.everything_else {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: dimgrey;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.menu {
+    margin-left: auto;
+    margin-right: auto;
+}
+
