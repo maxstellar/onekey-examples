@@ -9,6 +9,8 @@
             }
         </style>
         <script>
+            let state = 0;
+
             function checkHover(elementId) {
                 element = document.getElementById(elementId);
                 if (element.matches(":hover")) {
@@ -23,6 +25,19 @@
                 if (hback) {
                     window.location.href = "index.html"
                 }
+                if (state == 0) {
+                    intro = document.getElementById("intro");
+                    if (intro) {
+                        state++
+                        intro.classList.add('fade-out');
+                        intro.addEventListener('transitionend', () => {
+                            intro.remove();
+                            // begin game
+                            state = 1;
+                            gameLoop();
+                        }, { once: true });
+                    };
+                };
             };
 
             document.addEventListener('keydown', (event) => {
@@ -34,5 +49,11 @@
     </head>
     <body>
         <p id="back" class="btn" style="position: absolute; top: 10px; left: 10px;">back</p>
+        <div id="intro" class="intro">
+            <div class="menu">
+            <h1>red light green light on a budget</h1>
+            <p>how to play: hold down o to go forward, let go when red light is called!<br><br>again i didn't optimize this at all... sorry 😭<br>enjoy! (o to dismiss)</p>
+            </div>
+        </div>
     </body>
 </html>
