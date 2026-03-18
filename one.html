@@ -5,6 +5,8 @@
         <link rel="stylesheet" href="index.css">
         <script>
             let state = 0;
+            let score = 0;
+            let gameOver = false;
             function checkHover(elementId) {
                 element = document.getElementById(elementId);
                 if (element.matches(":hover")) {
@@ -25,8 +27,52 @@
                             intro.remove();
                             // begin game
                             state = 1;
+                            gameLoop();
                         }, { once: true });
                     };
+                } else if (state == 1) {
+                    // handle game press
+                    hw1 = checkHover("w1")
+                    hw2 = checkHover("w2")
+                    hw3 = checkHover("w3")
+                    hw4 = checkHover("w4")
+                    hw5 = checkHover("w5")
+                    hw6 = checkHover("w6")
+                    hw7 = checkHover("w7")
+                    hw8 = checkHover("w8")
+                    hw9 = checkHover("w9")
+                    let hw = 0
+                    if (hw1) {
+                        hw = document.getElementById("w1")
+                    } else if (hw2) {
+                        hw = document.getElementById("w2")
+                    } else if (hw3) {
+                        hw = document.getElementById("w3")
+                    } else if (hw4) {
+                        hw = document.getElementById("w4")
+                    } else if (hw5) {
+                        hw = document.getElementById("w5")
+                    } else if (hw6) {
+                        hw = document.getElementById("w6")
+                    } else if (hw7) {
+                        hw = document.getElementById("w7")
+                    } else if (hw8) {
+                        hw = document.getElementById("w8")
+                    } else if (hw9) {
+                        hw = document.getElementById("w9")
+                    };
+                    if (hw != 0 && hw.classList.contains("mole")) {
+                        hw.classList.remove('mole');
+                        score++;
+                        document.getElementById("score").innerHTML = score;
+                    } else if (hw != 0) {
+                        gameOver = true;
+                        state = 2;
+                        gameoverscreen = document.getElementById("gameoverscreen");
+                        gameoverscreen.classList.add('showing');
+                    };
+                } else if (state == 2) {
+                    window.location.reload();
                 };
                 if (hback) {
                     window.location.href = "index.html";
@@ -39,41 +85,59 @@
                 };
             });
 
-            while (true) {
-                // check for game start
-                setTimeout(() => {
-                    if (state == 1) {
-                        // game has started
-                    }
-                }, 1000);
-            }
+            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+            async function gameLoop() {
+                let speed = 2000;
+                gophers = 0;
+                while (true) {
+                    if (gameOver) {
+                        break;
+                    };
+                    speed = Math.max(2000 - (1.5**score) * 100, 300);
+                    await sleep(speed);
+                    if (gameOver) {
+                        break;
+                    };
+                    gopher = Math.floor(Math.random() * 9) + 1;
+                    gopherId = "w" + gopher.toString();
+                    wamslot = document.getElementById(gopherId);
+                    wamslot.classList.add('mole');
+                };
+            };
         </script>
     </head>
     <body>
         <p id="back" class="btn" style="position: absolute; top: 10px; left: 10px; z-index: 11;">back</p>
-        <p id="back" class="btn" style="position: absolute; top: 10px; right: 20px; z-index: 9;">0</p>
-        <div id="intro">
+        <p id="score" class="btn" style="position: absolute; top: 10px; right: 20px; z-index: 9;">0</p>
+        <div id="intro" class="intro">
             <div class="menu">
             <h1>whack-a-mole on a budget</h1>
-            <p>sorry this is a little buggy since i did not optimize it at all.<br>enjoy! (o to dismiss)</p>
+            <p>how to play: select the gophers (brown dots) once they appear!<br><br>sorry if this is a little laggy since i did not optimize it at all.<br>enjoy! (o to dismiss)</p>
+            </div>
+        </div>
+        <div class="intro" id="gameoverscreen">
+            <div class="menu">
+            <h1>game over!</h1>
+            <p>yeah bro there wasnt a mole there why did you select it???<br>press o to play again</p>
             </div>
         </div>
         <div class="everything_else">
             <div class="wam">
                 <grid-row>
-                <div class="wamslot">●</div>
-                <div class="wamslot">●</div>
-                <div class="wamslot">●</div>
+                <div class="wamslot" id="w1">●</div>
+                <div class="wamslot" id="w2">●</div>
+                <div class="wamslot" id="w3">●</div>
                 </grid-row>
                 <grid-row>
-                <div class="wamslot">●</div>
-                <div class="wamslot">●</div>
-                <div class="wamslot">●</div>
+                <div class="wamslot" id="w4">●</div>
+                <div class="wamslot" id="w5">●</div>
+                <div class="wamslot" id="w6">●</div>
                 </grid-row>
                 <grid-row>
-                <div class="wamslot">●</div>
-                <div class="wamslot">●</div>
-                <div class="wamslot">●</div>
+                <div class="wamslot" id="w7">●</div>
+                <div class="wamslot" id="w8">●</div>
+                <div class="wamslot" id="w9">●</div>
                 </grid-row>
             </div>
         </div>

@@ -7,7 +7,7 @@ body, html {
     letter-spacing: 0.7px;
 }
 
-#intro {
+.intro {
     position: absolute;
     top: 0;
     left: 0;
@@ -21,17 +21,28 @@ body, html {
     display: flex;
     align-items: center;
     opacity: 1;
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s linear;
 }
 
-#intro.fade-out {
+.intro.fade-out {
     opacity: 0;
 }
 
-#intro p {
+.intro p {
     margin-left: auto;
     margin-right: auto;
     font-size: 24px;
+}
+
+#gameoverscreen {
+    background-color: rgba(255, 0, 0, 0.25);
+    display: none;
+    opacity: 0;
+}
+
+#gameoverscreen.showing {
+    display: flex;
+    opacity: 1;
 }
 
 .everything_else {
@@ -87,7 +98,7 @@ body, html {
     user-select: none;
 }
 
-.wamslot .mole {
+.mole {
     color: #6F4E37;
 }
 
