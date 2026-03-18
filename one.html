@@ -7,6 +7,7 @@
             let state = 0;
             let score = 0;
             let gameOver = false;
+            let gophers = 0;
             function checkHover(elementId) {
                 element = document.getElementById(elementId);
                 if (element.matches(":hover")) {
@@ -64,6 +65,7 @@
                     if (hw != 0 && hw.classList.contains("mole")) {
                         hw.classList.remove('mole');
                         score++;
+                        gophers--;
                         document.getElementById("score").innerHTML = score;
                     } else if (hw != 0) {
                         gameOver = true;
@@ -89,8 +91,13 @@
 
             async function gameLoop() {
                 let speed = 2000;
-                gophers = 0;
                 while (true) {
+                    if (gophers > 2) {
+                        gameOver = true;
+                        state = 2;
+                        gameoverscreen = document.getElementById("gameoverscreen");
+                        gameoverscreen.classList.add('showing');
+                    }
                     if (gameOver) {
                         break;
                     };
@@ -102,24 +109,27 @@
                     gopher = Math.floor(Math.random() * 9) + 1;
                     gopherId = "w" + gopher.toString();
                     wamslot = document.getElementById(gopherId);
-                    wamslot.classList.add('mole');
+                    if (!wamslot.classList.contains('mole')) {
+                        wamslot.classList.add('mole');
+                        gophers++;
+                    }
                 };
             };
         </script>
     </head>
     <body>
         <p id="back" class="btn" style="position: absolute; top: 10px; left: 10px; z-index: 11;">back</p>
-        <p id="score" class="btn" style="position: absolute; top: 10px; right: 20px; z-index: 9;">0</p>
+        <p id="score" class="btn" style="position: absolute; top: 10px; right: 20px; z-index: 11;">0</p>
         <div id="intro" class="intro">
             <div class="menu">
             <h1>whack-a-mole on a budget</h1>
-            <p>how to play: select the gophers (brown dots) once they appear!<br><br>sorry if this is a little laggy since i did not optimize it at all.<br>enjoy! (o to dismiss)</p>
+            <p>how to play: select the moles (brown dots) once they appear!<br><br>sorry if this is a little laggy since i did not optimize it at all.<br>enjoy! (o to dismiss)</p>
             </div>
         </div>
         <div class="intro" id="gameoverscreen">
             <div class="menu">
             <h1>game over!</h1>
-            <p>yeah bro there wasnt a mole there why did you select it???<br>press o to play again</p>
+            <p>rip bozo skill issue<br>either you pressed a square without a mole or you let 3 gophers go unwhacked!!<br>press o to play again</p>
             </div>
         </div>
         <div class="everything_else">
