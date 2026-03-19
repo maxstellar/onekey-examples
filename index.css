@@ -109,3 +109,16 @@ body, html {
 .btn:hover {
     cursor: default;
 }
+
+.circle {
+    border-radius: 1000000000px;
+    background-color: white;
+}
+
+#player {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    left: calc(50vw - 100px);
+    top: 80vh;
+}

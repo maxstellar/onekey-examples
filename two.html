@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>game one</title>
+        <title>game two</title>
         <link rel="stylesheet" href="index.css">
         <style>
             html {
@@ -10,6 +10,8 @@
         </style>
         <script>
             let state = 0;
+            let oDown = false;
+            let fromTop = 0.8;
 
             function checkHover(elementId) {
                 element = document.getElementById(elementId);
@@ -20,35 +22,50 @@
                 };
             };
             
-            function handleKeyPress() {
-                hback = checkHover("back");
-                if (hback) {
-                    window.location.href = "index.html"
-                }
-                if (state == 0) {
-                    intro = document.getElementById("intro");
-                    if (intro) {
-                        state++
-                        intro.classList.add('fade-out');
-                        intro.addEventListener('transitionend', () => {
-                            intro.remove();
-                            // begin game
-                            state = 1;
-                            gameLoop();
-                        }, { once: true });
+            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+            
+            async function gameLoop() {
+                while (true) {
+                    await sleep(10);
+                    if (oDown && state == 1) {
+                        fromTop -= 0.001;
+                        document.getElementById("player").style.top = `${window.innerHeight * fromTop}px`;
                     };
-                };
-            };
+                }
+            }
 
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'o') {
-                    handleKeyPress()
+                    oDown = true;
+                    hback = checkHover("back");
+                    if (hback) {
+                        window.location.href = "index.html"
+                    }
+                    if (state == 0) {
+                        intro = document.getElementById("intro");
+                        if (intro) {
+                            intro.classList.add('fade-out');
+                            intro.addEventListener('transitionend', () => {
+                                intro.remove();
+                                // begin game
+                                state = 1;
+                            }, { once: true });
+                        };
+                    };
+                };
+            });
+
+            document.addEventListener('keyup', (event) => {
+                if (event.key === 'o') {
+                    oDown = false;
                 }
             });
+
+            gameLoop();
         </script>
     </head>
     <body>
-        <p id="back" class="btn" style="position: absolute; top: 10px; left: 10px;">back</p>
+        <p id="back" class="btn" style="position: absolute; top: 10px; left: 10px; z-index: 11;">back</p>
         <div id="intro" class="intro">
             <div class="menu">
             <h1>red light green light on a budget</h1>
@@ -56,6 +73,6 @@
             </div>
         </div>
         <div class="everything_else">
-            
+            <div class="circle" id="player"></div>
         </div>
 </html>

@@ -25,7 +25,6 @@
                 if (state == 0) {
                     intro = document.getElementById("intro");
                     if (intro) {
-                        state++
                         intro.classList.add('fade-out');
                         intro.addEventListener('transitionend', () => {
                             intro.remove();
