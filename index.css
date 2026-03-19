@@ -112,13 +112,22 @@ body, html {
 
 .circle {
     border-radius: 1000000000px;
-    background-color: white;
 }
 
 #player {
+    background-color: white;
     width: 200px;
     height: 200px;
     position: absolute;
     left: calc(50vw - 100px);
-    top: 80vh;
+    top: 70vh;
+}
+
+#rlglfinish {
+    background-color: #646464;
+    width: 300px;
+    height: 300px;
+    position: fixed;
+    left: calc(50vw - 150px);
+    top: 3vh;
 }
