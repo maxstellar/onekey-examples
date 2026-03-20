@@ -12,6 +12,7 @@
             let state = 0;
             let oDown = false;
             let fromTop = 0.7;
+            let greenlight = true;
 
             function checkHover(elementId) {
                 element = document.getElementById(elementId);
@@ -25,10 +26,11 @@
             const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
             
             async function gameLoop() {
+                greenlight = document.getElementById("greenlight");
                 while (true) {
                     await sleep(10);
                     if (oDown && state == 1) {
-                        if (fromTop <= 0.09) { state = 2 } else {fromTop -= 0.001; console.log(fromTop);}
+                        if (fromTop <= 0.09) { state = 2 } else {fromTop -= 0.0005; console.log(fromTop);}
                         document.getElementById("player").style.top = `${window.innerHeight * fromTop}px`;
                     };
                 }
@@ -43,11 +45,12 @@
                     }
                     if (state == 0) {
                         intro = document.getElementById("intro");
+                        greenlight = document.getElementById("greenlight");
                         if (intro) {
                             intro.classList.add('fade-out');
                             intro.addEventListener('transitionend', () => {
                                 intro.remove();
-                                // begin game
+                                greenlight.classList.add("showing");
                                 state = 1;
                             }, { once: true });
                         };
@@ -72,6 +75,8 @@
             <p>how to play: hold down o to go forward, let go when red light is called!<br><br>again i didn't optimize this at all... sorry 😭<br>enjoy! (o to dismiss)</p>
             </div>
         </div>
+        <div id="greenlight" class="intro"></div>
+        <div class="intro" id="greenlight"></div>
         <div class="everything_else">
             <div class="circle" id="rlglfinish"></div>
             <div class="circle" id="player"></div>
