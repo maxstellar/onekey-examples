@@ -9,6 +9,7 @@
             }
         </style>
         <script>
+            let state = 0;
             function checkHover(elementId) {
                 element = document.getElementById(elementId);
                 if (element.matches(":hover")) {
@@ -22,7 +23,18 @@
                 hback = checkHover("back");
                 if (hback) {
                     window.location.href = "index.html"
-                }
+                } else if (state == 0) {
+                        intro = document.getElementById("intro");
+                        if (intro) {
+                            intro.classList.add('fade-out');
+                            intro.addEventListener('transitionend', () => {
+                                intro.remove();
+                                state = 1;
+                            }, { once: true });
+                        };
+                } else if (state == 1) {
+                    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                };
             };
 
             document.addEventListener('keydown', (event) => {
@@ -34,5 +46,11 @@
     </head>
     <body>
         <p id="back" class="btn" style="position: absolute; top: 10px; left: 10px;">back</p>
+        <div id="intro" class="intro">
+            <div class="menu">
+            <h1>mystery invisible button</h1>
+            <p>how to play: press o for a surprise<br>listen i got LAZY<br><br>this one actually is optimized<br>you might somehow enjoy this! (o to dismiss)</p>
+            </div>
+        </div>
     </body>
 </html>

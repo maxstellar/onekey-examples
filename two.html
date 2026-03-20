@@ -12,7 +12,9 @@
             let state = 0;
             let oDown = false;
             let fromTop = 0.7;
-            let greenlight = true;
+            let green = true;
+            let finalKU = false;
+            let finalKD = false;
 
             function checkHover(elementId) {
                 element = document.getElementById(elementId);
@@ -27,14 +29,50 @@
             
             async function gameLoop() {
                 greenlight = document.getElementById("greenlight");
+                ticks = 0;
+                nextTicks = Math.floor(Math.random() * 101) + 300;
                 while (true) {
+                    ticks++
                     await sleep(10);
                     if (oDown && state == 1) {
-                        if (fromTop <= 0.09) { state = 2 } else {fromTop -= 0.0005; console.log(fromTop);}
+                        if (!green) {
+                            state = 2;
+                            greenlight.classList.remove('showing');
+                            gameoverscreen = document.getElementById("gameoverscreen");
+                            gameoverscreen.classList.add('showing');
+                        };
+                        if (fromTop <= 0.09) {
+                            state = 2;
+                            greenlight.classList.remove('showing');
+                            youwinscreen = document.getElementById("youwinscreen");
+                            youwinscreen.classList.add('showing');
+                        } else {
+                            fromTop -= 0.0005; console.log(fromTop);
+                        };
                         document.getElementById("player").style.top = `${window.innerHeight * fromTop}px`;
                     };
-                }
-            }
+                };
+            };
+
+            async function gameLoop2() {
+                while (true) {
+                    await sleep(100);
+                    if (state == 2) {
+                        break;
+                    };
+                    if (ticks >= nextTicks) {
+                        nextTicks += Math.floor(Math.random() * 101) + 300;
+                        greenlight.classList.add("yellow");
+                        await sleep(Math.floor(Math.random() * (500 - 250 + 1)) + 250);
+                        green = false;
+                        greenlight.classList.add("red");
+                        greenlight.classList.remove("yellow");
+                        await sleep(Math.floor(Math.random() * (3000 - 2000 + 1)) + 2000);
+                        green = true;
+                        greenlight.classList.remove("red");
+                    };
+                };
+            };
 
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'o') {
@@ -54,17 +92,26 @@
                                 state = 1;
                             }, { once: true });
                         };
+                    } else if (state == 2 && finalKU) {
+                        finalKD = true;
                     };
                 };
             });
 
             document.addEventListener('keyup', (event) => {
                 if (event.key === 'o') {
+                    if (state == 2) {
+                        finalKU = true;
+                    };
+                    if (finalKD) {
+                        window.location.reload();
+                    };
                     oDown = false;
                 }
             });
 
             gameLoop();
+            gameLoop2();
         </script>
     </head>
     <body>
@@ -72,7 +119,19 @@
         <div id="intro" class="intro">
             <div class="menu">
             <h1>red light green light on a budget</h1>
-            <p>how to play: hold down o to go forward, let go when red light is called!<br><br>again i didn't optimize this at all... sorry 😭<br>enjoy! (o to dismiss)</p>
+            <p>how to play: hold down o to go forward, let go when red light is called!<br>the light will turn yellow to give you a brief warning.<br><br>again i didn't optimize this at all... sorry 😭<br>enjoy! (o to dismiss)</p>
+            </div>
+        </div>
+        <div class="intro" id="gameoverscreen">
+            <div class="menu">
+            <h1>game over!</h1>
+            <p>rip bozo skill issue<br>press o to play again</p>
+            </div>
+        </div>
+        <div class="intro" id="youwinscreen">
+            <div class="menu">
+            <h1>you win!</h1>
+            <p>gg W talent broski<br>press o to play again, for some reason</p>
             </div>
         </div>
         <div id="greenlight" class="intro"></div>
